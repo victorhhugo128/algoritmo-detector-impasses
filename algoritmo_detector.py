@@ -38,59 +38,58 @@ def checar_recursos(r: list, a: list, c: list) -> set:
                 a[i_recurso] += recurso
 
     # Printa o estado atual dos dados envolvidos nas operações.
-    print(f'A: {A}')
-    print(f'E: {E}')
-    print(f'C: {C}')
-    print(f'R: {R}')
+    print(f'A: {a}')
+    print(f'C: {c}')
+    print(f'R: {r}')
     print('\n\n')
 
     # Retorna o conjunto de processos que não puderam ser atendidos.
     return impasses
 
 
-# Abre o arquivo do cenário selecionado e atribui seus dados a uma variável.
-with open(r'cenario3.pkl', 'rb') as file:
-    cenario = pickle.load(file)
+if __name__ == '__main__':
+    with open(r'cenario3.pkl', 'rb') as file:
+        cenario = pickle.load(file)
 
-# Atribuindo os devidos valores do cenário escolhido
-A = cenario['A']
-E = cenario['E']
-C = cenario['C']
-R = cenario['R']
+    # Atribuindo os devidos valores do cenário escolhido
+    A = cenario['A']
+    E = cenario['E']
+    C = cenario['C']
+    R = cenario['R']
 
-print(f'A: {A}')
-print(f'E: {E}')
-print(f'C: {C}')
-print(f'R: {R}')
-print('\n\n')
+    print(f'A: {A}')
+    print(f'E: {E}')
+    print(f'C: {C}')
+    print(f'R: {R}')
+    print('\n\n')
 
-a0 = None
-a1 = None
+    a0 = None
+    a1 = None
 
-# Entra em um loop para alocar os recursos para cada processo possível. Se o estado dos dados não muda, significa
-# que, ou há um impasse, ou todos os processos foram atendidos.
-while True:
-    a1 = checar_recursos(R, A, C)
-    # print(a1)
+    # Entra em um loop para alocar os recursos para cada processo possível. Se o estado dos dados não muda, significa
+    # que, ou há um impasse, ou todos os processos foram atendidos.
+    while True:
+        a1 = checar_recursos(R, A, C)
+        # print(a1)
 
-    if a0 == a1:
-        break
+        if a0 == a1:
+            break
 
-    a0 = a1
+        a0 = a1
 
-i = 0
+    i = 0
 
-# Faz a formatação da saída do programa
-if a1 != set():
-    qtd_processos = len(a1)
-    print(f"Há {qtd_processos} impasses no sistema.")
-    print("Processos envolvidos no empasse:", end='')
-    for elemento in a1:
-        if i > 0:
-            print(',', end='')
-        print(f' {elemento + 1}', end='')
-        i += 1
-    print('.')
+    # Faz a formatação da saída do programa
+    if a1 != set():
+        qtd_processos = len(a1)
+        print(f"Há {qtd_processos} impasses no sistema.")
+        print("Processos envolvidos no empasse:", end='')
+        for elemento in a1:
+            if i > 0:
+                print(',', end='')
+            print(f' {elemento + 1}', end='')
+            i += 1
+        print('.')
 
-else:
-    print("Não há impasses no sistema.")
+    else:
+        print("Não há impasses no sistema.")
